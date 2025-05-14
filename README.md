@@ -1,21 +1,21 @@
-# 🚢 Godot Boat Simulation
+# Godot Ship Simulation
 
-A 3D boat simulation built with **Godot Engine 4.4.1**, using pure **GDScript**.  
+A 3D ship simulation built with **Godot Engine 4.4.1**, using pure **GDScript**.  
 This project demonstrates ship movement, first-person control, buoyancy, and a dynamic ocean environment.
 
 ---
 
-## 🎮 Features
+## Features
 
-- 🧭 First-person view control
-- 🚤 Realistic ship movement and turning
-- 🌊 Buoyancy simulation on water surface
-- 🌅 Dynamic sky and lighting
-- 📊 On-screen HUD showing speed and rotation
+- First-person view control
+- Realistic ship movement and turning
+- Buoyancy simulation on water surface
+- Dynamic sky and lighting
+- On-screen HUD showing speed and rotation
 
 ---
 
-## 🖥️ Requirements
+## Requirements
 
 | Component   | Recommended Spec |
 |-------------|------------------|
@@ -28,7 +28,7 @@ This project demonstrates ship movement, first-person control, buoyancy, and a d
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 1. Download and install [Godot 4.4.1](https://godotengine.org/download).
 2. Clone this repository
