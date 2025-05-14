@@ -20,7 +20,7 @@ This project demonstrates ship movement, first-person control, buoyancy, and a d
 
 ## Getting Started
 
-1. Download and unzip [Godot 4.4.1](https://godotengine.org/download).
+1. Download and unzip [Godot 4.4.1](https://godotengine.org/download/).
 2. Clone this repository
 3. Launch Godot and open the project (`project.godot`)
 4. Run the main scene (`main.tscn`) by pressing F5
