@@ -131,7 +131,7 @@ func _process(delta):
 	horizontal_speed = Vector2(test_ship.linear_velocity.x, test_ship.linear_velocity.z).length()
 	heading_rad = deg_to_rad(heading)# 角度轉為弧度
 	forward_vec = Vector2(-sin(heading_rad), -cos(heading_rad))# -Z軸朝北，X軸朝東
-	velocity_vec = Vector2(ship.linear_velocity.x, ship.linear_velocity.z)
+	velocity_vec = Vector2(test_ship.linear_velocity.x, test_ship.linear_velocity.z)
 	dot = forward_vec.dot(velocity_vec)
 	is_reversing = dot < 0
 	var speed_str = ""
