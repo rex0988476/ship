@@ -1,1 +1,1 @@
-# ship
+# ship simulator
