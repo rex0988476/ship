@@ -1,0 +1,20 @@
+[gd_resource type="StandardMaterial3D" load_steps=7 format=3 uid="uid://bph1calfgi0y5"]
+
+[ext_resource type="Texture2D" uid="uid://c8j2705lemrnh" path="res://models/old_boat/Rope_mat_Base_Color.png" id="1_0ba1q"]
+[ext_resource type="Texture2D" uid="uid://c8okcwjcph258" path="res://models/old_boat/Rope_mat_Mixed_AO.png" id="2_6klxa"]
+[ext_resource type="Texture2D" uid="uid://dny2c36ewqsux" path="res://models/old_boat/Rope_mat_Height.png" id="3_eojv5"]
+[ext_resource type="Texture2D" uid="uid://dxqweqrkitpwy" path="res://models/old_boat/Rope_mat_Metallic.png" id="4_yirkm"]
+[ext_resource type="Texture2D" uid="uid://b25u3revcn46s" path="res://models/old_boat/Rope_mat_Normal.png" id="5_i0yk7"]
+[ext_resource type="Texture2D" uid="uid://db00v8p6gdnl0" path="res://models/old_boat/Rope_mat_Roughness.png" id="6_06cti"]
+
+[resource]
+albedo_texture = ExtResource("1_0ba1q")
+metallic = 1.0
+metallic_texture = ExtResource("4_yirkm")
+roughness_texture = ExtResource("6_06cti")
+normal_enabled = true
+normal_texture = ExtResource("5_i0yk7")
+ao_enabled = true
+ao_texture = ExtResource("2_6klxa")
+heightmap_enabled = true
+heightmap_texture = ExtResource("3_eojv5")

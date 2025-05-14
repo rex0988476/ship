@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddkig7hw8ftam"]
+
+[ext_resource type="Script" uid="uid://bdunhcoqk7kl3" path="res://ship.gd" id="1_e7g62"]
+[ext_resource type="PackedScene" uid="uid://dpymjpdw0ayte" path="res://models/fishingboat/fishingboat.glb" id="2_f2ug1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dg77c"]
+size = Vector3(5, 3, 12)
+
+[node name="Fishing_boat" type="RigidBody3D"]
+script = ExtResource("1_e7g62")
+
+[node name="Fishing_boat_model" parent="." instance=ExtResource("2_f2ug1")]
+transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, 0, 2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -4.5)
+shape = SubResource("BoxShape3D_dg77c")

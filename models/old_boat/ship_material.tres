@@ -1,0 +1,20 @@
+[gd_resource type="StandardMaterial3D" load_steps=7 format=3 uid="uid://cvvpe1o1yb7me"]
+
+[ext_resource type="Texture2D" uid="uid://d0pwd82csiji4" path="res://models/old_boat/Boat_Mat_BaseColor.png" id="1_snpys"]
+[ext_resource type="Texture2D" uid="uid://mb4r73yoxwac" path="res://models/old_boat/Boat_Mat_AmbientOcclusion.png" id="2_4hceu"]
+[ext_resource type="Texture2D" uid="uid://bcs3n0nwy7sy2" path="res://models/old_boat/Boat_Mat_Metallic.png" id="3_4hceu"]
+[ext_resource type="Texture2D" uid="uid://blam3cnx7mjd1" path="res://models/old_boat/Boat_Mat_Height.png" id="3_efgcp"]
+[ext_resource type="Texture2D" uid="uid://dwg073t77wo8x" path="res://models/old_boat/Boat_Mat_Roughness.png" id="5_4a4j7"]
+[ext_resource type="Texture2D" uid="uid://ccxwtu03nqfd" path="res://models/old_boat/Boat_Mat_Normal_OpenGL.png" id="5_ogj44"]
+
+[resource]
+albedo_texture = ExtResource("1_snpys")
+metallic = 1.0
+metallic_texture = ExtResource("3_4hceu")
+roughness_texture = ExtResource("5_4a4j7")
+normal_enabled = true
+normal_texture = ExtResource("5_ogj44")
+ao_enabled = true
+ao_texture = ExtResource("2_4hceu")
+heightmap_enabled = true
+heightmap_texture = ExtResource("3_efgcp")

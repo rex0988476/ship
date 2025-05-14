@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://743ywrnx8y3o"]
+
+[ext_resource type="Script" uid="uid://bdunhcoqk7kl3" path="res://ship.gd" id="1_ultty"]
+[ext_resource type="PackedScene" uid="uid://bt3e8fj728lym" path="res://models/old_boat/uploads_files_969212_Old_boat_Mesh.fbx" id="2_3d0mq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4c57u"]
+size = Vector3(30, 11, 12)
+
+[node name="Old_boat" type="RigidBody3D"]
+script = ExtResource("1_ultty")
+
+[node name="Old_boat_model" parent="." instance=ExtResource("2_3d0mq")]
+transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, 0, -1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 4.25, -1.5)
+shape = SubResource("BoxShape3D_4c57u")

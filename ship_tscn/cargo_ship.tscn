@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://ciqtl77xpm1e"]
+
+[ext_resource type="Script" uid="uid://bdunhcoqk7kl3" path="res://ship.gd" id="1_ph0gg"]
+[ext_resource type="PackedScene" uid="uid://dx5wvkbi4p0vv" path="res://models/Cargo_ship/uploads_files_2401592_Ocean+Freighter.glb" id="2_se772"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_efxa6"]
+size = Vector3(50, 58, 135)
+
+[node name="Cargo_ship" type="RigidBody3D"]
+script = ExtResource("1_ph0gg")
+
+[node name="Cargo_ship_model" parent="." instance=ExtResource("2_se772")]
+transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, -8, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 20, 2)
+shape = SubResource("BoxShape3D_efxa6")

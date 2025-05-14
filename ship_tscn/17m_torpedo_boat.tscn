@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://wab84uwfjkca"]
+
+[ext_resource type="Script" uid="uid://bdunhcoqk7kl3" path="res://ship.gd" id="1_iy03a"]
+[ext_resource type="PackedScene" uid="uid://20fcqc3pdjex" path="res://models/Torpedo_boat/17m Torpedo boats.fbx" id="2_yf8ym"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ycdy4"]
+size = Vector3(40, 62, 185)
+
+[node name="17m_Torpedo_boat" type="RigidBody3D"]
+script = ExtResource("1_iy03a")
+
+[node name="17m_Torpedo_boat_model" parent="." instance=ExtResource("2_yf8ym")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 6, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 4.5)
+shape = SubResource("BoxShape3D_ycdy4")

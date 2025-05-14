@@ -1,0 +1,238 @@
+[gd_scene load_steps=18 format=3 uid="uid://bpklmymnqripg"]
+
+[ext_resource type="Script" uid="uid://b4hho3q7h3yh3" path="res://main.gd" id="1_lquwl"]
+[ext_resource type="Script" uid="uid://cdtktycvlfahi" path="res://camera_rig.gd" id="2_0xm2m"]
+[ext_resource type="Material" uid="uid://ecgexs0km24u" path="res://sky_material.tres" id="2_5vw27"]
+[ext_resource type="Script" uid="uid://l81kvjhhn273" path="res://sky_manager.gd" id="2_kek77"]
+[ext_resource type="Shader" uid="uid://dtqplaenucmy2" path="res://Water.gdshader" id="2_lquwl"]
+[ext_resource type="Material" uid="uid://c5qpq4fmc5vxs" path="res://sky_materials/day_sky.tres" id="3_dg77c"]
+[ext_resource type="Material" uid="uid://c2ocu65qjqk5p" path="res://sky_materials/sunset_sky.tres" id="4_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://dob6v6ufl6xk0" path="res://models/Military/uploads_files_4979876_Boat.fbx" id="5_5vw27"]
+[ext_resource type="Material" uid="uid://dt8ulul4254yk" path="res://sky_materials/night_sky.tres" id="5_w48qg"]
+[ext_resource type="PackedScene" uid="uid://wab84uwfjkca" path="res://ship_tscn/17m_torpedo_boat.tscn" id="7_272bh"]
+[ext_resource type="Script" uid="uid://jlgxvn435504" path="res://player_ship.gd" id="8_dg77c"]
+[ext_resource type="Script" uid="uid://ibvjr7q3x7br" path="res://key_indicator.gd" id="11_efxa6"]
+
+[sub_resource type="Sky" id="Sky_5vw27"]
+sky_material = ExtResource("2_5vw27")
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 2
+sky = SubResource("Sky_5vw27")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lquwl"]
+render_priority = 0
+shader = ExtResource("2_lquwl")
+shader_parameter/wave_a = Vector3(1, 0.4, 10)
+shader_parameter/wave_a_dir = Vector2(1, 0)
+shader_parameter/wave_b = Vector3(1, 0.25, 20)
+shader_parameter/wave_b_dir = Vector2(1, 1)
+shader_parameter/wave_c = Vector3(1, 0.15, 1)
+shader_parameter/wave_c_dir = Vector2(1, 0.5)
+shader_parameter/time = 0.0
+shader_parameter/height_scale = 1.0
+shader_parameter/beer_factor = 0.8
+shader_parameter/_DepthGradientShallow = Color(0.325, 0.807, 0.971, 0.725)
+shader_parameter/_DepthGradientDeep = Color(0.086, 0.407, 1, 0.749)
+shader_parameter/_DepthMaxDistance = 1.0
+shader_parameter/_DepthFactor = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_h2yge"]
+material = SubResource("ShaderMaterial_lquwl")
+size = Vector2(1000, 1000)
+subdivide_width = 100
+subdivide_depth = 100
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1bvp3"]
+size = Vector3(8.5, 10, 30)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_lquwl")
+
+[node name="SkyManager" type="Node3D" parent="." node_paths=PackedStringArray("world_environment", "sun_light", "time_label")]
+script = ExtResource("2_kek77")
+day_material = ExtResource("3_dg77c")
+sunset_material = ExtResource("4_ycdy4")
+night_material = ExtResource("5_w48qg")
+world_environment = NodePath("../WorldEnvironment")
+sun_light = NodePath("../DirectionalLight3D")
+time_label = NodePath("../CanvasLayer/Time_label")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0xm2m")
+
+[node name="Water" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_h2yge")
+
+[node name="PlayerShip" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 200)
+mass = 2.0
+script = ExtResource("8_dg77c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerShip"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1.75, -0.75)
+shape = SubResource("BoxShape3D_1bvp3")
+
+[node name="CameraRig" type="Node3D" parent="PlayerShip"]
+script = ExtResource("2_0xm2m")
+
+[node name="Camera3D" type="Camera3D" parent="PlayerShip/CameraRig"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, -6)
+current = true
+
+[node name="Military_model" parent="PlayerShip" instance=ExtResource("5_5vw27")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Player_ship_name_label" type="Label" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 25.0
+text = "玩家"
+vertical_alignment = 1
+
+[node name="Position_label" type="Label" parent="CanvasLayer"]
+offset_top = 25.0
+offset_right = 149.0
+offset_bottom = 50.0
+text = "座標: X = 0.0, Z = 0.0"
+vertical_alignment = 1
+
+[node name="Speed_label" type="Label" parent="CanvasLayer"]
+offset_top = 50.0
+offset_right = 102.0
+offset_bottom = 75.0
+text = "速度: 0.00 節"
+vertical_alignment = 1
+
+[node name="Angle_speed_label" type="Label" parent="CanvasLayer"]
+offset_top = 75.0
+offset_right = 138.0
+offset_bottom = 100.0
+text = "轉向率: 0.0 弧度/秒"
+vertical_alignment = 1
+
+[node name="Angle_label" type="Label" parent="CanvasLayer"]
+offset_top = 100.0
+offset_right = 116.0
+offset_bottom = 125.0
+text = "朝向角度: 0.0 度"
+vertical_alignment = 1
+
+[node name="Time_label" type="Label" parent="CanvasLayer"]
+offset_left = 600.0
+offset_right = 640.0
+offset_bottom = 25.0
+
+[node name="Test_label" type="Label" parent="CanvasLayer"]
+offset_left = 300.0
+offset_right = 340.0
+offset_bottom = 23.0
+
+[node name="KeyIndicator" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 75.0
+offset_bottom = 50.0
+script = ExtResource("11_efxa6")
+
+[node name="W_label" type="Label" parent="CanvasLayer/KeyIndicator"]
+layout_mode = 2
+offset_left = 25.0
+offset_top = 125.0
+offset_right = 50.0
+offset_bottom = 150.0
+text = "W"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="A_label" type="Label" parent="CanvasLayer/KeyIndicator"]
+layout_mode = 2
+offset_top = 150.0
+offset_right = 25.0
+offset_bottom = 175.0
+text = "A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="S_label" type="Label" parent="CanvasLayer/KeyIndicator"]
+layout_mode = 2
+offset_left = 25.0
+offset_top = 150.0
+offset_right = 50.0
+offset_bottom = 175.0
+text = "S"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="D_label" type="Label" parent="CanvasLayer/KeyIndicator"]
+layout_mode = 2
+offset_left = 50.0
+offset_top = 150.0
+offset_right = 75.0
+offset_bottom = 175.0
+text = "D"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TurnSlider" type="VSlider" parent="CanvasLayer"]
+offset_left = 1075.0
+offset_top = 380.0
+offset_right = 1095.0
+offset_bottom = 602.0
+
+[node name="SpeedSlider" type="VSlider" parent="CanvasLayer"]
+offset_left = 1000.0
+offset_top = 380.0
+offset_right = 1020.0
+offset_bottom = 602.0
+
+[node name="Speed_name_label" type="Label" parent="CanvasLayer"]
+offset_left = 987.0
+offset_top = 340.0
+offset_right = 1052.0
+offset_bottom = 365.0
+text = "Speed: 0"
+
+[node name="Turn_name_label" type="Label" parent="CanvasLayer"]
+offset_left = 1073.0
+offset_top = 340.0
+offset_right = 1127.0
+offset_bottom = 365.0
+text = "Turn: 0"
+
+[node name="Turn_num_label" type="Label" parent="CanvasLayer"]
+offset_left = 1105.0
+offset_top = 374.0
+offset_right = 1129.0
+offset_bottom = 605.0
+text = "10
+
+
+
+0
+
+
+
+-10"
+vertical_alignment = 1
+
+[node name="Speed_num_label" type="Label" parent="CanvasLayer"]
+offset_left = 1030.0
+offset_top = 374.0
+offset_right = 1054.0
+offset_bottom = 605.0
+text = "10
+
+
+
+0
+
+
+
+-10"
+
+[node name="17m_Torpedo_boat" parent="." instance=ExtResource("7_272bh")]
