@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://d1iyotkbyhnbo"]
+
+[ext_resource type="Script" uid="uid://jlgxvn435504" path="res://player_ship.gd" id="1_u1p65"]
+[ext_resource type="Script" uid="uid://cdtktycvlfahi" path="res://camera_rig.gd" id="2_vun5a"]
+[ext_resource type="PackedScene" uid="uid://dob6v6ufl6xk0" path="res://models/Military/uploads_files_4979876_Boat.fbx" id="3_4o2kw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1bvp3"]
+size = Vector3(0.533295, 0.567604, 1.4654)
+
+[node name="PlayerShip" type="RigidBody3D"]
+mass = 2.0
+script = ExtResource("1_u1p65")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00151062, 0.0229607, -0.0415535)
+shape = SubResource("BoxShape3D_1bvp3")
+
+[node name="CameraRig" type="Node3D" parent="."]
+script = ExtResource("2_vun5a")
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -0.3)
+current = true
+
+[node name="Military_model" parent="." instance=ExtResource("3_4o2kw")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)

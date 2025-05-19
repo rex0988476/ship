@@ -5,12 +5,12 @@ extends RigidBody3D
 
 var sway_phase := 0.0
 
-@export var speed := 10.0             # 前進推力大小
-@export var turn := 20.0               # 旋轉力矩大小
-@export var max_forward_speed := 0.0             # 前進推力大小
-@export var max_back_speed := 0.0             # 後退推力大小
-@export var max_right_turn := 0.0               # 右旋轉力矩大小
-@export var max_left_turn := 0.0               # 左旋轉力矩大小
+@export var speed := 7.0             # 前進推力大小
+@export var turn := 0.05               # 旋轉力矩大小
+#@export var max_forward_speed := 0.0             # 前進推力大小
+#@export var max_back_speed := 0.0             # 後退推力大小
+#@export var max_right_turn := 0.0               # 右旋轉力矩大小
+#@export var max_left_turn := 0.0               # 左旋轉力矩大小
 @export var buoyancy_force := 50.0    # 浮力強度
 @export var damping := 2.0            # 垂直速度阻尼
 @export var target_height := 1.8      # 希望船穩定在這個高度（通常 > 水面 Y）
@@ -20,19 +20,19 @@ var current_key := ""
 func _physics_process(delta):
 	# 🚀 移動控制（WASD）
 	if Input.is_action_pressed("ui_up"):# W（前進）
-		if abs(linear_velocity.x) < max_forward_speed and abs(linear_velocity.z) < max_forward_speed:
-			apply_central_force(-transform.basis.z * speed)
+		#if abs(linear_velocity.x) < max_forward_speed and abs(linear_velocity.z) < max_forward_speed:
+		apply_central_force(-transform.basis.z * speed)
 	if Input.is_action_pressed("ui_left"):# A（左轉）
 		#print(abs(rad_to_deg(angular_velocity.y)),max_left_turn)
-		if abs(rad_to_deg(angular_velocity.y)) < max_left_turn:
-			apply_torque(Vector3.UP * turn)
+		#if abs(rad_to_deg(angular_velocity.y)) < max_left_turn:
+		apply_torque(Vector3.UP * turn)
 	if Input.is_action_pressed("ui_right"):# D（右轉）
 		#print(abs(rad_to_deg(angular_velocity.y)),max_right_turn)
-		if abs(rad_to_deg(angular_velocity.y)) < max_right_turn:
-			apply_torque(Vector3.UP * -turn)
+		#if abs(rad_to_deg(angular_velocity.y)) < max_right_turn:
+		apply_torque(Vector3.UP * -turn)
 	if Input.is_action_pressed("ui_down"):# S（後退）
-		if abs(linear_velocity.x) < max_back_speed and abs(linear_velocity.z) < max_back_speed:
-			apply_central_force(transform.basis.z * speed)
+		#if abs(linear_velocity.x) < max_back_speed and abs(linear_velocity.z) < max_back_speed:
+		apply_central_force(transform.basis.z * speed)
 	#print(linear_velocity)
 	#print(angular_velocity.y, max_right_turn)
 	
