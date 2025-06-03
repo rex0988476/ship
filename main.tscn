@@ -61,16 +61,16 @@ mesh = SubResource("PlaneMesh_efxa6")
 environment = SubResource("Environment_dg77c")
 camera_attributes = SubResource("CameraAttributesPractical_ycdy4")
 script = ExtResource("3_efxa6")
-current_time = 13.303
-minutes_per_day = 1.0
+current_time = 11.2526
+minutes_per_day = 0.5
 metadata/_custom_type_script = "uid://fnax5kbopsvp"
 
 [node name="SunLight" type="DirectionalLight3D" parent="Sky3D"]
-transform = Transform3D(0, -0.899646, -0.436621, 0.489878, -0.380642, 0.784303, -0.871791, -0.213891, 0.440716, -0.43662, 0.784303, 0.440716)
+transform = Transform3D(0, -0.984002, 0.178159, 0.293825, 0.170294, 0.940567, -0.955859, 0.0523475, 0.289125, 0.178159, 0.940567, 0.289125)
 shadow_enabled = true
 
 [node name="MoonLight" type="DirectionalLight3D" parent="Sky3D"]
-transform = Transform3D(0, -0.466283, -0.884636, 0.999993, 0.00324882, -0.00171242, 0.0036725, -0.88463, 0.46628, -0.884636, -0.00171232, 0.46628)
+transform = Transform3D(0, -0.824726, 0.565532, 0.695762, 0.406206, 0.592378, -0.718272, 0.393476, 0.573813, 0.565532, 0.592378, 0.573813)
 light_color = Color(0.572549, 0.776471, 0.956863, 1)
 light_energy = 0.0
 shadow_enabled = true
@@ -85,8 +85,8 @@ ground_color = Color(0.3, 0.3, 0.3, 1)
 sky_layers = 4
 sky_render_priority = -128
 horizon_level = 0.0
-sun_altitude = -38.3437
-sun_azimuth = -224.732
+sun_altitude = -19.853
+sun_azimuth = -148.359
 sun_disk_color = Color(0.996094, 0.541334, 0.140076, 1)
 sun_disk_intensity = 2.0
 sun_disk_size = 0.015
@@ -94,8 +94,8 @@ sun_light_path = NodePath("../SunLight")
 sun_light_color = Color(1, 1, 1, 1)
 sun_horizon_light_color = Color(0.98, 0.523, 0.294, 1)
 sun_light_energy = 1.0
-moon_altitude = -61.6921
-moon_azimuth = -130.99
+moon_altitude = -61.2016
+moon_azimuth = -233.896
 moon_color = Color(1, 1, 1, 1)
 moon_size = 0.07
 enable_set_moon_texture = false
@@ -103,7 +103,7 @@ moon_resolution = 2
 moon_light_path = NodePath("../MoonLight")
 moon_light_color = Color(0.572549, 0.776471, 0.956863, 1)
 moon_light_energy = 0.3
-deep_space_euler = Vector3(1.29154, 3.14159, 2.21058)
+deep_space_euler = Vector3(1.29154, 3.14159, 0.222229)
 background_color = Color(0.709804, 0.709804, 0.709804, 0.854902)
 set_background_texture = false
 stars_field_color = Color(1, 1, 1, 1)
@@ -169,11 +169,11 @@ environment = SubResource("Environment_dg77c")
 script = ExtResource("5_ycdy4")
 dome_path = NodePath("../Skydome")
 system_sync = false
-total_cycle_in_minutes = 1.0
-total_hours = 13.303
-day = 25
-month = 10
-year = 2027
+total_cycle_in_minutes = 0.5
+total_hours = 11.2526
+day = 17
+month = 3
+year = 2028
 celestials_calculations = 1
 compute_moon_coords = true
 compute_deep_space_coords = true
@@ -275,11 +275,5 @@ offset_bottom = 175.0
 text = "D"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="VSlider" type="VSlider" parent="CanvasLayer"]
-offset_left = 1183.0
-offset_top = 364.0
-offset_right = 1255.0
-offset_bottom = 685.0
 
 [node name="Cargo_ship" parent="." instance=ExtResource("10_4c57u")]
