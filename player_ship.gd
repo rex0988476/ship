@@ -28,6 +28,8 @@ func _ready():
 	axis_lock_angular_z = true   # 鎖定 Z 轉動（Roll）
 	
 func _physics_process(delta):
+	if get_parent().external_control_active:
+		return
 	# ─── 1. 波浪視覺搖晃（只動 Visual，與物理無關） ─────────────────(VisualWave)
 	sway_phase += delta * SWAY_SPEED
 	wave_node.rotation_degrees.x = sin(sway_phase) * SWAY_AMOUNT    # pitch 前後
