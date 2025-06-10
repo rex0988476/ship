@@ -39,21 +39,30 @@ func _physics_process(delta):
 		apply_central_force(-transform.basis.z * speed)
 	elif Input.is_action_pressed("ui_down"):
 		apply_central_force(transform.basis.z * speed)
-	if Input.is_action_pressed("ui_left"):# A（左轉）
-		if ctrl_node.rotation_degrees.z <  MAX_ROLL:
-			target_roll =  MAX_ROLL # 左傾
-		else:
-			target_roll = 0.0
-		apply_torque(Vector3(0, 1, 0) * turn)
-	elif Input.is_action_pressed("ui_right"):# D（右轉）
-		if ctrl_node.rotation_degrees.z > -MAX_ROLL:
-			target_roll = -MAX_ROLL # 右傾
-		else:
-			target_roll = 0.0
-		apply_torque(Vector3(0, 1, 0) * -turn)
-	# ─── 3. 自動回正「轉彎造成的傾斜」──────────────────────────────
-	if !Input.is_action_pressed("ui_left") && !Input.is_action_pressed("ui_right"):
-		target_roll = 0.0 # 回正
+	# 讀出當前水平速度（X/Z 平面）
+	var horizontal_speed = Vector2(linear_velocity.x, linear_velocity.z).length()
+	# 定義最大轉向速度所需的船速（節）
+	const MAX_TURN_SPEED = 3.0  # 單位 m/s，約 6 節
+	# 定義最小可啟動舵效的速度
+	const MIN_TURN_SPEED = 0.2  # 低於此則完全無效
+
+	# 速度歸一化到 0~1 之間，越快轉向越有效
+	var turn_factor = clamp((horizontal_speed - MIN_TURN_SPEED) / (MAX_TURN_SPEED - MIN_TURN_SPEED), 0.0, 1.0)
+
+	# 左轉
+	if Input.is_action_pressed("ui_left") and turn_factor > 0.0:
+		target_roll = MAX_ROLL * turn_factor
+		apply_torque(Vector3.UP * turn * turn_factor)
+
+	# 右轉
+	elif Input.is_action_pressed("ui_right") and turn_factor > 0.0:
+		target_roll = -MAX_ROLL * turn_factor
+		apply_torque(Vector3.UP * -turn * turn_factor)
+
+	# 沒有按轉向鍵，回正
+	else:
+		target_roll = 0.0
+
 	# ─── 4. 以「距離目標角度」作為速度權重，達到漸進效果 ──(VisualCtrl)
 	var current_roll := ctrl_node.rotation_degrees.z
 	var diff := target_roll - current_roll         # 剩餘角度
