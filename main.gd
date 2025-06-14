@@ -29,7 +29,7 @@ var last_external_control_time := 0.0
 const EXTERNAL_CONTROL_TIMEOUT := 2.0  # 2秒無外部控制資料則恢復手動控制
 const INTERPOLATION_SPEED := 2.0  # 插值速度，數值越大移動越快，為了平滑移動
 
-var speed_unit = 5
+var speed_unit = 0.5144
 var turn_unit = 3
 
 #func _on_speed_slider_changed(value):
