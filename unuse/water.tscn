@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ch73kgpe4mw17"]
 
-[ext_resource type="Shader" uid="uid://dsnkyljauj5mx" path="res://unuse/Water.gdshader" id="1_qi1wl"]
+[ext_resource type="Shader" uid="uid://dsnkyljauj5mx" path="res://Water.gdshader" id="1_qi1wl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4c57u"]
 render_priority = 0
