@@ -4,6 +4,10 @@
 shader_type spatial;
 render_mode unshaded, depth_draw_never, cull_front, skip_vertex_transform;
 
+// ... (在其他 uniform 的下方加入) ...
+uniform vec2 _custom_fog_params; // x: fog_density, y: sky_affect
+uniform vec4 _custom_fog_color;  // 我們傳遞進來的霧氣顏色
+
 // Color correction
 uniform vec2 _color_correction_params;
 uniform vec4 _ground_color: source_color;
@@ -295,5 +299,15 @@ void fragment(){
 
 	col.rgb = tonemapPhoto(col.rgb, _color_correction_params.y, _color_correction_params.x);
 
+	// ... (原本計算 col.rgb 的程式碼) ...
+	// --- 新增的霧氣計算程式碼 (使用正確的變數 col) ---
+	float fog_density = _custom_fog_params.x;
+	float sky_affect = _custom_fog_params.y;
+	// Godot 內建的指數霧核心公式
+	float fog_amount = 1.0 - exp(VERTEX.z * fog_density);
+	
+	// 將 col (最終的天空顏色) 與霧氣顏色，根據計算出的霧量和 sky_affect 進行混合
+	col.rgb = mix(col.rgb, _custom_fog_color.rgb, fog_amount * sky_affect);
+	// --- 結束新增 ---
 	ALBEDO = col.rgb;
 }

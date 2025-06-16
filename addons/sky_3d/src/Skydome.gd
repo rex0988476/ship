@@ -1863,3 +1863,17 @@ func _get_property_list() -> Array:
 	ret.push_back({name = "environment", type = TYPE_OBJECT, hint = PROPERTY_HINT_RESOURCE_TYPE, hint_string = "Resource"})
 	
 	return ret
+
+# 請將這個新函式加入到 Skydome.gd 的最下方
+
+func set_custom_fog(density: float, affect: float, fog_density: float):
+	if is_instance_valid(sky_material):
+		# 我們可以從 Environment 獲取霧的顏色，如果需要的話
+		var fog_light_color = Color.WHITE # 預設為白色
+		if is_instance_valid(environment):
+			fog_light_color = environment.fog_light_color
+
+		sky_material.set_shader_parameter("_custom_fog_params", Vector2(density, affect))
+		sky_material.set_shader_parameter("_custom_fog_color", fog_light_color)
+		#print(fog_density)
+		set_fog_density(fog_density)

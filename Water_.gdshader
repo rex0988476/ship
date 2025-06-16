@@ -156,7 +156,7 @@ void fragment() {
 	vec3 deep;
 
 	float depth3 = texture(depth_texture, SCREEN_UV).x;
-	
+
 	vec3 ndc3 = vec3(SCREEN_UV, depth3) * 2.0 - 1.0;
 	vec4 world3 = camera_mix * INV_PROJECTION_MATRIX * vec4(ndc3, 1.0);
 	vec3 world_position = world3.xyz / world3.w;
@@ -202,7 +202,7 @@ void fragment() {
 		vec3 over = texture(screen_texture, SCREEN_UV).rgb;
 		_albedo = mix(over, surface_bottom.rgb, surface_bottom.a);
 	}
-	
+
 	// Antz!!! FOAM!
 	// set edge near/far to your camera near/far - TODO convert to uniform
 	float z_depth = edge(0.05, 200, texture(depth_texture, SCREEN_UV).x); // depth texture
@@ -211,9 +211,9 @@ void fragment() {
 	waterDepth = max(waterDepth, 0.0); // make sure waterdepth >= 0
 
 	float edgePatternScroll = TIME * foamScrollSpeed;
-    
+
     vec2 scaledUV = rounded_uv * foamScale;
-	
+
 	// Calculate linear falloff value
     float falloff = 1.0 - (waterDepth / foamFallOffDistance) + foamEdgeBias;
 
@@ -225,7 +225,7 @@ void fragment() {
     float mask = (channelA + channelB) * 0.95;
     mask = pow(mask, 2.0);
     mask = clamp(mask, 0.0, 1.0);
-	
+
 	 // Is this pixel in the leading edge?
     if(waterDepth < foamFallOffDistance * foamEdgeDistance) {
         // Modulate the surface alpha and the mask strength
@@ -241,10 +241,10 @@ void fragment() {
 
 
 
-	
+
 	ALBEDO = _albedo;
 	ALBEDO = mix(sky_color, ALBEDO, v_color.a);
-	
+
 	// Subtract mask value from foam gradient, then add the foam value to the final pixel color
     ALBEDO += clamp(edge - vec3(mask), 0.0, 1.0);
 }
