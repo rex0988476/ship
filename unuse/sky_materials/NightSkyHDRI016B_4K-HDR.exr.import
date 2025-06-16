@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bytsxryl1k3s3"
-path="res://.godot/imported/basic_water_material_5.jpg-7da51879bb75b444359641252d640864.ctex"
+uid="uid://c0h5006qqkevb"
+path="res://.godot/imported/NightSkyHDRI016B_4K-HDR.exr-c2cb09795f24bc47cd411233f682b201.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://maujoe.basic_water_material/screenshots/basic_water_material_5.jpg"
-dest_files=["res://.godot/imported/basic_water_material_5.jpg-7da51879bb75b444359641252d640864.ctex"]
+source_file="res://unuse/sky_materials/NightSkyHDRI016B_4K-HDR.exr"
+dest_files=["res://.godot/imported/NightSkyHDRI016B_4K-HDR.exr-c2cb09795f24bc47cd411233f682b201.ctex"]
 
 [params]
 

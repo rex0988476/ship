@@ -1,21 +1,24 @@
 extends Node3D
-
+# --- UI 和場景節點引用 ---
 @onready var pos_label := $CanvasLayer/Position_label
 @onready var angle_rad_label := $CanvasLayer/Angle_label
 @onready var speed_label := $CanvasLayer/Speed_label
 @onready var angle_speed_label := $CanvasLayer/Angle_speed_label
-@onready var test_label := $CanvasLayer/Test_label #line 65
-#@onready var test_ship := get_node("17m_Torpedo_boat")
+@onready var test_label := $CanvasLayer/Test_label
 @onready var test_ship := get_node("Cargo_ship")
-@onready var ship := $PlayerShip  # 如果不是直接子節點，請用相對路徑或 `get_node("...")`
+@onready var ship := $PlayerShip
+@onready var time_label := $CanvasLayer/Currenttime_label
+
+# --- Sky3D 和拉條引用 ---
+@onready var sky_node = $Sky3D
+@onready var time_slider = $CanvasLayer/EnvCtrlVContainer/Time_slider
+@onready var brightness_slider = $CanvasLayer/EnvCtrlVContainer/Brightness_slider
+@onready var fog_slider = $CanvasLayer/EnvCtrlVContainer/Fog_slider
+
+var current_time := 3.0
 
 #@onready var sun = $DirectionalLight3D
 var time_of_day := 0.0  # 0 ~ 1 (0=清晨, 0.5=中午, 1=夜晚)
-
-#@onready var speed_slider := $CanvasLayer/SpeedSlider
-#@onready var turn_slider := $CanvasLayer/TurnSlider
-#@onready var speed_name_label := $CanvasLayer/Speed_name_label
-#@onready var turn_name_label := $CanvasLayer/Turn_name_label
 
 var ws := WebSocketPeer.new()
 var send_timer := 0.0
@@ -78,6 +81,19 @@ var boat_start_pos = [
 
 func _ready():
 	ws.connect_to_url("ws://localhost:8080")
+	
+	# 初始化拉條
+	if sky_node:
+		time_slider.value = sky_node.current_time
+		brightness_slider.value = sky_node.tonemap_exposure
+		
+		var initial_fog_percent = 0.0
+		fog_slider.min_value = 0.0
+		fog_slider.max_value = 1.0
+		fog_slider.value = initial_fog_percent
+		fog_slider.step = 0.01
+		_on_fog_slider_value_changed(initial_fog_percent)
+		
 	#pass
 	#randomize()
 	#var selected_scene = boat_scenes[randi() % boat_scenes.size()]
@@ -101,6 +117,44 @@ func _ready():
 	#turn_slider.focus_mode = Control.FOCUS_NONE
 	#speed_slider.connect("value_changed", Callable(self, "_on_speed_slider_changed"))
 	#turn_slider.connect("value_changed", Callable(self, "_on_turn_slider_changed"))
+
+# --- 控制時間 ---
+func _on_time_slider_value_changed(value):
+	if sky_node:
+		 # 正確的屬性是 `current_time`
+		sky_node.current_time = value
+		current_time = clamp(value, 0.0, 23.99)
+
+# --- 控制亮度 ---
+func _on_brightness_slider_value_changed(value):
+	if sky_node:
+		# 這是控制整體曝光/亮度的最佳屬性
+		sky_node.tonemap_exposure = value
+
+# --- 最終、最正確的霧氣控制函式 ---
+func _on_fog_slider_value_changed(value): # value 的範圍是 0.0 到 1.0
+	if sky_node:
+		var skydome = sky_node.get_node_or_null("Skydome")
+		if skydome:
+				# 1. 計算霧氣濃度
+			# 當 value 為 0 (最左), density 為 0
+			# 當 value 為 1 (最右), density 為 max_density
+			var max_density = 1.0 # 使用我們測試過有用的較大值
+			var density = lerp(0.0, max_density, value)
+			#density = max_density - density
+			# 2. 計算天空影響度
+			# 當 value 為 0 (最左), affect 為 0 (天空清晰)
+			# 當 value 為 1 (最右), affect 為 1 (天空被霧完全覆蓋)
+			var affect = lerp(0.0, 1.0, value)
+			#affect = 1.0 - affect
+			
+			var fog_density = lerp(0.0, 0.00025, value)
+			# 直接呼叫我們在 Skydome.gd 中建立的新函式
+			#skydome.set_custom_fog(density, affect)
+			skydome.set_custom_fog(density, affect, fog_density)
+		var max_exp_fog_density = 0.015 # 使用您測試過有用的較大值
+		sky_node.environment.fog_density = lerp(0.0, max_exp_fog_density, value)
+
 
 func convert_to_gps(pos: Vector3) -> Vector2:
 	var base_lat = 22.861765
@@ -286,3 +340,12 @@ func _process(delta):
 			ws.send_text(json)
 	elif state == WebSocketPeer.STATE_CLOSING or state == WebSocketPeer.STATE_CLOSED:
 		print("WebSocket 斷線或關閉")
+	
+	update_time_display()
+
+func update_time_display():
+	var hours := int(current_time) % 24
+	var minutes := int((current_time - hours) * 60.0)
+	var time_str := "%02d:%02d" % [hours, minutes]
+	if time_label:
+		time_label.text = "時間：" + time_str

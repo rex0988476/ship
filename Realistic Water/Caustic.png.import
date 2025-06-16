@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ducpmb5b3hd61"
-path="res://.godot/imported/basic_water_material_3.jpg-2b688eed56520a37194ad13af3ea6173.ctex"
+uid="uid://dlkwmy8frmogh"
+path="res://.godot/imported/Caustic.png-22a0e61d1ff9639b9c870ecd4cf247e1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://maujoe.basic_water_material/screenshots/basic_water_material_3.jpg"
-dest_files=["res://.godot/imported/basic_water_material_3.jpg-2b688eed56520a37194ad13af3ea6173.ctex"]
+source_file="res://Realistic Water/Caustic.png"
+dest_files=["res://.godot/imported/Caustic.png-22a0e61d1ff9639b9c870ecd4cf247e1.ctex"]
 
 [params]
 

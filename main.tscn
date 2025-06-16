@@ -1,7 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://bpklmymnqripg"]
+[gd_scene load_steps=14 format=3 uid="uid://bpklmymnqripg"]
 
 [ext_resource type="Script" uid="uid://b4hho3q7h3yh3" path="res://main.gd" id="1_lquwl"]
-[ext_resource type="Shader" uid="uid://dsnkyljauj5mx" path="res://Water.gdshader" id="2_4c57u"]
+[ext_resource type="Material" uid="uid://bknctbf1dn2lp" path="res://Realistic Water/Water.material" id="2_5vw27"]
 [ext_resource type="Script" uid="uid://fnax5kbopsvp" path="res://addons/sky_3d/src/Sky3D.gd" id="3_efxa6"]
 [ext_resource type="Script" uid="uid://66au4cnjnpbw" path="res://addons/sky_3d/src/Skydome.gd" id="4_dg77c"]
 [ext_resource type="Script" uid="uid://5c8dx3cahlay" path="res://addons/sky_3d/src/TimeOfDay.gd" id="5_ycdy4"]
@@ -9,28 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://ciqtl77xpm1e" path="res://ship_tscn/cargo_ship.tscn" id="10_4c57u"]
 [ext_resource type="Script" uid="uid://ibvjr7q3x7br" path="res://key_indicator.gd" id="11_efxa6"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4c57u"]
-render_priority = 0
-shader = ExtResource("2_4c57u")
-shader_parameter/wave_a = Vector3(1, 0.4, 10)
-shader_parameter/wave_a_dir = Vector2(1, 0)
-shader_parameter/wave_b = Vector3(1, 0.25, 20)
-shader_parameter/wave_b_dir = Vector2(1, 1)
-shader_parameter/wave_c = Vector3(1, 0.15, 1)
-shader_parameter/wave_c_dir = Vector2(1, 0.5)
-shader_parameter/time = 0.0
-shader_parameter/height_scale = 1.0
-shader_parameter/beer_factor = 0.8
-shader_parameter/_DepthGradientShallow = Color(0.325, 0.807, 0.971, 0.725)
-shader_parameter/_DepthGradientDeep = Color(0.086, 0.407, 1, 0.749)
-shader_parameter/_DepthMaxDistance = 1.0
-shader_parameter/_DepthFactor = 1.0
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_efxa6"]
-material = SubResource("ShaderMaterial_4c57u")
+[sub_resource type="PlaneMesh" id="PlaneMesh_272bh"]
 size = Vector2(1000, 1000)
-subdivide_width = 100
-subdivide_depth = 100
+subdivide_width = 64
+subdivide_depth = 64
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_4c57u"]
 use_debanding = false
@@ -42,36 +24,35 @@ sky_material = SubResource("PhysicalSkyMaterial_4c57u")
 background_mode = 2
 sky = SubResource("Sky_efxa6")
 ambient_light_source = 3
-ambient_light_color = Color(0.721784, 0.606738, 0.549089, 1)
+ambient_light_color = Color(0.967709, 0.967709, 0.967709, 1)
 reflected_light_source = 2
 tonemap_mode = 3
 tonemap_white = 6.0
+fog_enabled = true
+volumetric_fog_density = 0.0
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ycdy4"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_lquwl")
 
-[node name="SkyManager" type="Node3D" parent="."]
-
 [node name="Water" type="MeshInstance3D" parent="."]
-mesh = SubResource("PlaneMesh_efxa6")
+mesh = SubResource("PlaneMesh_272bh")
+surface_material_override/0 = ExtResource("2_5vw27")
 
 [node name="Sky3D" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_dg77c")
 camera_attributes = SubResource("CameraAttributesPractical_ycdy4")
 script = ExtResource("3_efxa6")
-current_time = 16.8702
 minutes_per_day = 0.5
 metadata/_custom_type_script = "uid://fnax5kbopsvp"
 
 [node name="SunLight" type="DirectionalLight3D" parent="Sky3D"]
-transform = Transform3D(0, -0.390924, -0.920423, -0.548703, -0.76949, 0.326819, -0.836018, 0.505039, -0.214501, -0.920423, 0.326819, -0.214501)
-light_color = Color(0.993073, 0.834786, 0.755469, 1)
+transform = Transform3D(0, -0.607216, 0.794537, -0.354812, 0.742843, 0.567709, -0.934938, -0.281911, -0.215447, 0.794537, 0.567709, -0.215447)
 shadow_enabled = true
 
 [node name="MoonLight" type="DirectionalLight3D" parent="Sky3D"]
-transform = Transform3D(0, -0.990449, 0.137876, -0.0286266, 0.13782, 0.990044, -0.99959, -0.00394693, -0.0283533, 0.137876, 0.990044, -0.0283531)
+transform = Transform3D(0, -0.499841, -0.866117, 0.806494, -0.512085, 0.295527, -0.591242, -0.698518, 0.403119, -0.866117, 0.295527, 0.403119)
 light_color = Color(0.572549, 0.776471, 0.956863, 1)
 light_energy = 0.0
 shadow_enabled = true
@@ -86,8 +67,8 @@ ground_color = Color(0.3, 0.3, 0.3, 1)
 sky_layers = 4
 sky_render_priority = -128
 horizon_level = 0.0
-sun_altitude = -70.9241
-sun_azimuth = -283.118
+sun_altitude = -55.4094
+sun_azimuth = -74.8284
 sun_disk_color = Color(0.996094, 0.541334, 0.140076, 1)
 sun_disk_intensity = 2.0
 sun_disk_size = 0.015
@@ -95,8 +76,8 @@ sun_light_path = NodePath("../SunLight")
 sun_light_color = Color(1, 1, 1, 1)
 sun_horizon_light_color = Color(0.98, 0.523, 0.294, 1)
 sun_light_energy = 1.0
-moon_altitude = -146.923
-moon_azimuth = -357.279
+moon_altitude = -119.548
+moon_azimuth = -259.494
 moon_color = Color(1, 1, 1, 1)
 moon_size = 0.07
 enable_set_moon_texture = false
@@ -104,7 +85,7 @@ moon_resolution = 2
 moon_light_path = NodePath("../MoonLight")
 moon_light_color = Color(0.572549, 0.776471, 0.956863, 1)
 moon_light_energy = 0.3
-deep_space_euler = Vector3(1.29154, 3.14159, 2.63855)
+deep_space_euler = Vector3(1.29154, 3.14159, -0.999501)
 background_color = Color(0.709804, 0.709804, 0.709804, 0.854902)
 set_background_texture = false
 stars_field_color = Color(1, 1, 1, 1)
@@ -168,13 +149,15 @@ environment = SubResource("Environment_dg77c")
 
 [node name="TimeOfDay" type="Node" parent="Sky3D"]
 script = ExtResource("5_ycdy4")
+update_in_game = false
+update_in_editor = false
 dome_path = NodePath("../Skydome")
 system_sync = false
 total_cycle_in_minutes = 0.5
-total_hours = 16.8702
-day = 4
-month = 8
-year = 2029
+total_hours = 8.0
+day = 16
+month = 7
+year = 2030
 celestials_calculations = 1
 compute_moon_coords = true
 compute_deep_space_coords = true
@@ -185,7 +168,49 @@ utc = 7.0
 [node name="PlayerShip" parent="." instance=ExtResource("6_5vw27")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 130)
 
+[node name="Cargo_ship" parent="." instance=ExtResource("10_4c57u")]
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="EnvCtrlVContainer" type="VBoxContainer" parent="CanvasLayer"]
+offset_top = 200.0
+offset_right = 200.0
+offset_bottom = 300.0
+
+[node name="Time_label" type="Label" parent="CanvasLayer/EnvCtrlVContainer"]
+layout_mode = 2
+text = "Time"
+vertical_alignment = 1
+
+[node name="Time_slider" type="HSlider" parent="CanvasLayer/EnvCtrlVContainer"]
+layout_mode = 2
+focus_mode = 0
+max_value = 24.0
+step = 0.1
+value = 6.0
+
+[node name="Brightness_label" type="Label" parent="CanvasLayer/EnvCtrlVContainer"]
+layout_mode = 2
+text = "Brightness"
+
+[node name="Brightness_slider" type="HSlider" parent="CanvasLayer/EnvCtrlVContainer"]
+layout_mode = 2
+focus_mode = 0
+min_value = 0.1
+max_value = 4.0
+step = 0.1
+value = 1.0
+
+[node name="Fog_label" type="Label" parent="CanvasLayer/EnvCtrlVContainer"]
+layout_mode = 2
+text = "Fog"
+
+[node name="Fog_slider" type="HSlider" parent="CanvasLayer/EnvCtrlVContainer"]
+layout_mode = 2
+focus_mode = 0
+max_value = 1.0
+step = 0.01
+value = 1.0
 
 [node name="Player_ship_name_label" type="Label" parent="CanvasLayer"]
 offset_right = 40.0
@@ -221,7 +246,7 @@ offset_bottom = 125.0
 text = "朝向角度: 0.0 度"
 vertical_alignment = 1
 
-[node name="Time_label" type="Label" parent="CanvasLayer"]
+[node name="Currenttime_label" type="Label" parent="CanvasLayer"]
 offset_left = 600.0
 offset_right = 640.0
 offset_bottom = 25.0
@@ -277,4 +302,6 @@ text = "D"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Cargo_ship" parent="." instance=ExtResource("10_4c57u")]
+[connection signal="value_changed" from="CanvasLayer/EnvCtrlVContainer/Time_slider" to="." method="_on_time_slider_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/EnvCtrlVContainer/Brightness_slider" to="." method="_on_brightness_slider_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/EnvCtrlVContainer/Fog_slider" to="." method="_on_fog_slider_value_changed"]
