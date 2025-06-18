@@ -1,6 +1,6 @@
 extends Node
 
-@onready var sky_mat: ProceduralSkyMaterial = preload("res://sky_material.tres")
+@onready var sky_mat: ProceduralSkyMaterial = preload("res://unuse/sky_material.tres")
 
 var current_top_color: Color
 var current_horizon_color: Color
